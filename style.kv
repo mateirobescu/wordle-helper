@@ -1,0 +1,160 @@
+#:import hex kivy.utils.get_color_from_hex
+#:import Factory kivy.factory.Factory
+
+<SettingsPopup>:
+	title: "Settings"
+	size_hint: 0.8, 0.8
+	ScrollView:
+		GridLayout:
+			spacing: 80
+			padding: [0, 20, 0, 20]
+			size_hint_y: None
+			height: self.minimum_height
+			cols: 1
+			size: root.size
+			AnchorLayout:
+				id: anc
+				size_hint_y: None
+				height: instructions.height
+
+				anchor_y: "top"
+				padding: [20, 0, 20, 0]
+				Label:
+					id: instructions
+					text: root.get_instructions()
+					size_hint_y: None
+					text_size: self.width, None
+					height: self.texture_size[1]
+
+			AnchorLayout:
+				size_hint_y: None
+				anchor_x: "center"
+				Button:
+					id: close_button
+					size_hint: 0.4, None
+					background_color: hex("ff0000")
+					height: dp(80)
+					text: "RESET GAME"
+					on_press: root.reset_game()
+
+
+<LetterInput>:
+    height: self.minimum_height
+    width: self.height
+
+
+<WHScreen>:
+	id: main_screen
+
+	BoxLayout:
+		orientation: "vertical"
+		GridLayout:
+			size_hint: 1, None
+			height: dp(60)
+			cols: 3
+
+			canvas.before:
+				Color:
+					rgb: hex('#558d4e')
+				Rectangle:
+					pos: self.pos
+					size: self.size
+
+			AnchorLayout
+				anchor_x: "left"
+				padding: [20, 0, 0, 0]
+                Button:
+                    id: settings_button
+                    on_press: Factory.SettingsPopup(input_layout, keyboard_layout, words_displayer).open()
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    background_color: 0, 0, 0, 0
+		            Image:
+		                source: 'SettingsIcon2.png'
+		                pos: settings_button.pos
+		                size: settings_button.size
+
+			AnchorLayout:
+				anchor_x: "center"
+				Label:
+					size_hint: None, 1
+					font_size: dp(20)
+					text: "WordleHelper"
+					font_name: "font/HelveticaNeueBd.ttf"
+
+
+			AnchorLayout:
+				anchor_x: "right"
+				padding: [0, 0, 20, 0]
+				Button:
+					id: dark_mode_button
+					size_hint: None, None
+					size: dp(50), dp(50)
+					on_press: main_screen.toggle_dark_mode()
+#					background_normal: 'DarkLightModeIcon.png'
+					background_color: 0, 0, 0, 0
+					Image:
+						source: 'DarkLightModeIcon.png'
+						pos: dark_mode_button.pos
+						size: dark_mode_button.size
+
+
+		ScrollView:
+			id: main_panel
+		    effect_cls: "ScrollEffect"
+			overscroll: 0
+			GridLayout:
+				size_hint_y: None
+				spacing: dp(30)
+				padding: [0, 30, 0, 30]
+				cols: 1
+				height: self.minimum_height
+
+				AnchorLayout:
+					size_hint: 1, None
+					anchor_x: "center"
+					height: self.children[0].height
+					InputLayout:
+						id: input_layout
+						size_hint: None, None
+						width: self.minimum_width
+						height: self.minimum_height
+						pos_hint: {"center_x": .5}
+						spacing: self.get_spacing
+						padding: [0, 0, 0, 0]
+
+				LettersLayout:
+					id: keyboard_layout
+
+
+				AnchorLayout:
+					size_hint: 1, None
+					Button:
+
+						anchor_x: "center"
+						text: "SEARCH"
+						size_hint: None, None
+						width: words_displayer.width
+						on_press: main_screen.search_words(input_layout, keyboard_layout, words_displayer)
+
+				WordsDisplayerPanel:
+					anchor_x: "center"
+                    anchor_y: "top"
+                    size_hint: 1, None
+                    height: self.get_height(words_displayer.height, main_panel.height)
+                    ScrollView:
+                        effect_cls: "ScrollEffect"
+                        size_hint: 0.5, 1
+
+                        canvas.before:
+                            Color:
+                                rgb: hex("#558d4e")
+                            Line:
+                                rectangle: (self.pos[0], self.pos[1], self.width, self.height)
+                                width: 4
+
+                        WordsDisplayer:
+                            id: words_displayer
+                            cols: 1
+                            size_hint: 1, None
+                            height: self.minimum_height

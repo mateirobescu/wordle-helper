@@ -1,0 +1,15 @@
+    Hello, and welcome to WordleHelper, the most "useful" app ever made. The whole purpose of the app is to help you solve the Wordle Game. Yes, yes, you can search for the answer on the internet, but what's the fun in that? Also, if you're using an unofficial version of Wordle, this can be very helpful if you want to maintain your 100% rate of success.
+
+
+
+HOW TO USE THE APP:
+
+    - Use one of the starting words from the list below to begin your game with a high probability of success.
+
+    - Enter the GREEN letters (the one whose positions in the word you know) into the 5 entries (situated at the top of the screen). Do not type anything if you do not know what letter is there.
+
+    - On the keyboard press the letters, until they become YELLOW if you know that they are in the word.
+
+    - On the keyboard press the letters, until they become RED if you know that they are not in the word.
+
+    -Press SEARCH and choose one of the words in the list. Choose a word that is close to the top of the list as those are the most common (not really) in English.
